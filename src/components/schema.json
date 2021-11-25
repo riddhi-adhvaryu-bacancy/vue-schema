@@ -1,0 +1,122 @@
+{
+    "type": "object",
+    "title": "",
+    "required": [
+        "Name"
+    ],
+    "properties": {
+        "Name": {
+            "type": "string",
+            "title": "Name "
+        },
+        "About": {
+            "type": "string",
+            "title": "About ",
+            "maxLength": 2000
+        },
+        "Gender": {
+            "type": "string",
+            "title": "Gender ",
+            "enum": [
+                "Male",
+                "Female",
+                "Other"
+            ],
+            "attrs": {
+                "placeholder": "Select gender",
+                "title": "Please select gender"
+            }
+        },
+        "Birthdate": {
+            "type": "string",
+            "title": "Birthdate",
+            "format": "date"
+        },
+        "Birthtime": {
+            "type": "string",
+            "title": "Birthtime",
+            "format": "time"
+        },
+        "FavColor": {
+            "title": "Select favourite color using color picker",
+            "description": "In hex format",
+            "type": "string",
+            "format": "hexcolor",
+            "x-display": "color-picker"
+        },
+        "Active": {
+            "type": "boolean",
+            "title": "Profile Active?",
+            "description": "",
+            "default": true,
+            "attrs": {
+                "type": "switch"
+            }
+        },
+        "Hobby": {
+            "type": "array",
+            "title": "Hobbies",
+            "items": {
+                "$ref": "#/definitions/hobby"
+            }
+        },
+        "PaymentInfo": {
+            "type": "object",
+            "title": "Payment Info",
+            "oneOf": [
+                {
+                    "$ref": "#/definitions/creditCard"
+                },
+                {
+                    "$ref": "#/definitions/upi"
+                }
+            ]
+        }
+    },
+    "definitions": {
+        "hobby": {
+            "type": "object",
+            "properties": {
+                "Hobby": {
+                    "type": "string"
+                },
+                "isCertified": {
+                    "title": "Is certified?",
+                    "type": "boolean"
+                }
+            }
+        },
+        "creditCard": {
+            "title": "Main infos",
+            "properties": {
+                "address": {
+                    "type": "string",
+                    "maxLength": 2000
+                },
+                "credit_card": {
+                    "type": "number"
+                }
+            },
+            "dependencies": {
+                "credit_card": {
+                    "properties": {
+                        "billing_address": {
+                        "type": "string"
+                        }
+                    },
+                    "required": [
+                        "billing_address"
+                    ]
+                }
+            }
+        },
+        "upi": {
+            "title": "UPI",
+            "properties": {
+                "upiId": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
